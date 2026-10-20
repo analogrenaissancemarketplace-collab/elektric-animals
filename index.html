@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elektric Animals</title>
+<meta name="description" content="Elektric Animals: listen to B &amp; B MOTEL, the debut album. Merch, booking, socials and more.">
+<meta name="theme-color" content="#2b150a">
+<link rel="icon" type="image/jpeg" href="art/crest.jpg">
+<link rel="apple-touch-icon" href="art/crest.jpg">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elektric Animals">
+<meta property="og:description" content="B &amp; B MOTEL, the debut album, out now. Listen, shop merch and book the band.">
+<meta property="og:url" content="https://elektricanimals.com/">
+<meta property="og:image" content="https://elektricanimals.com/art/cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
+body{margin:0;font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Red+Hat+Text:wght@400;500;700&family=Red+Hat+Mono:wght@500&family=Shrikhand&display=swap">
+<style>
+/* Layout: B&B MOTEL record sleeve as a phone app — header with crest + wordmark, five swipeable rooms (scroll-snap), bottom tab bar */
+:root{
+  --sleeve:#f7f4ee;   /* inner-sleeve off-white */
+  --paper:#ffffff;
+  --rust:#d5471f;     /* crest orange */
+  --mustard:#e9a750;  /* crest gold */
+  --bark:#2b150a;     /* weathered wood, darkest */
+  --wood:#6b3517;
+  --sky:#d6f0f6;      /* back-cover sky */
+  --muted:#8a6c58;
+  --line:#e6dccd;
+  --display:"Red Hat Display", "Helvetica Neue", Arial, sans-serif;
+  --body:"Red Hat Text", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Red Hat Mono", ui-monospace, Menlo, monospace;
+  --script:"Shrikhand", Georgia, serif;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--sleeve);color:var(--bark);font-family:var(--body);font-size:16px;line-height:1.45;
+  display:flex;flex-direction:column;overflow:hidden;-webkit-tap-highlight-color:transparent;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--rust);outline-offset:3px;border-radius:4px}
+
+/* header */
+.top{
+  flex:none;display:flex;align-items:center;gap:10px;background:var(--bark);
+  padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:10px;
+}
+.top .badge{width:34px;height:34px;flex:none;border-radius:4px;overflow:hidden}
+.top .badge img{width:100%;height:100%;object-fit:cover}
+.top .wm{flex:1;min-width:0;display:flex}
+.top .wm img{height:22px;width:auto;max-width:100%;object-fit:contain;object-position:left center}
+.top .rpm{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--mustard);opacity:.8;white-space:nowrap}
+
+.draft{
+  flex:none;font-family:var(--mono);font-size:11px;color:var(--mustard);background:var(--rust);
+  padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:6px;display:flex;justify-content:space-between;gap:8px;align-items:center
+}
+.draft button{font-family:var(--mono);font-size:11px;text-decoration:underline;color:var(--mustard)}
+
+/* pager */
+.pager{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}
+.pager::-webkit-scrollbar{display:none}
+.pane{flex:0 0 100%;width:100%;height:100%;overflow-y:auto;scroll-snap-align:start;scroll-snap-stop:always;overscroll-behavior-y:contain}
+.inner{
+  max-width:520px;margin:0 auto;padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:18px 36px;
+  display:flex;flex-direction:column;gap:22px;
+}
+
+/* type */
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust)}
+h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(30px,9vw,42px);line-height:.92;letter-spacing:-.01em;margin:6px 0 0;color:var(--bark);text-wrap:balance}
+h2 em{font-style:normal;color:var(--rust)}
+.codes{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mustard)}
+
+/* home: sleeve headline */
+.sleeve-head{display:inline-block;font-family:var(--display);font-weight:900;color:var(--mustard);line-height:.8;white-space:nowrap;letter-spacing:-.02em;margin:0 0 -6px;font-size:64px}
+.cover{position:relative;box-shadow:0 18px 40px -18px rgba(43,21,10,.55)}
+.cover img{width:100%;aspect-ratio:1;object-fit:cover}
+.starring{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.starring .s{font-family:var(--script);font-size:38px;line-height:1;color:var(--mustard);text-shadow:2px 2px 0 var(--rust)}
+.starring .names{display:grid;grid-template-columns:1fr 44px 1fr;align-items:center;gap:10px;width:100%;
+  font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.02em;color:var(--wood)}
+.starring .names span:first-child{text-align:right}
+.starring .names span:last-child{text-align:left}
+.starring .names img{width:44px;height:44px;border-radius:3px}
+
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:10px 12px;
+  font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:14px;letter-spacing:.04em;
+  background:var(--rust);color:var(--mustard);transition:transform .12s}
+.btn.alt{background:var(--bark);color:var(--mustard)}
+.btn:active{transform:scale(.97)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+/* link rows */
+.links{display:flex;flex-direction:column;gap:8px}
+.row{display:flex;align-items:center;gap:14px;min-height:62px;padding:10px 14px;background:var(--paper);border:1px solid var(--line);
+  transition:transform .12s, border-color .2s}
+.row:active{transform:scale(.98)}
+.row:hover{border-color:var(--rust)}
+.row .ic{width:38px;height:38px;display:grid;place-items:center;background:var(--rust);flex:none}
+.row .ic svg{width:20px;height:20px;fill:none;stroke:var(--mustard);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.row .lbl{flex:1;min-width:0}
+.row .lbl b{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:15px;letter-spacing:.02em}
+.row .lbl small{display:block;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .arr{color:var(--rust);font-weight:700}
+.row.primary{background:var(--rust);border-color:var(--rust);color:var(--mustard)}
+.row.primary .lbl small,.row.primary .arr{color:var(--mustard);opacity:.85}
+.row.primary .ic{background:var(--bark)}
+
+/* tracklist block, as on the back cover */
+.backcover{background:var(--sky);padding:28px 18px 20px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.backcover .over{font-family:var(--display);font-weight:700;text-transform:uppercase;color:var(--mustard);text-align:center;line-height:1.05;font-size:18px;text-shadow:0 1px 0 rgba(43,21,10,.08)}
+.tracklist{list-style:none;margin:0;padding:20px 12px;background:var(--rust);width:100%;max-width:340px;counter-reset:t;display:flex;flex-direction:column;gap:8px}
+.tracklist li{counter-increment:t;display:flex;align-items:baseline;justify-content:center;gap:8px;text-align:center;
+  font-family:var(--display);font-weight:700;text-transform:uppercase;color:var(--mustard);font-size:clamp(14px,4.4vw,17px);line-height:1.15}
+.tracklist li::before{content:counter(t);font-family:var(--mono);font-size:10px;opacity:.6;font-weight:500}
+.backcover .credit{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--wood);text-align:center}
+
+.disco{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.disco li{border-bottom:1px solid var(--line)}
+.disco a{display:flex;gap:12px;align-items:baseline;padding:12px 2px}
+.disco .y{font-family:var(--mono);color:var(--rust);font-size:13px;width:40px;flex:none;font-variant-numeric:tabular-nums}
+.disco .t{flex:1;min-width:0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:14px}
+.disco .k{font-family:var(--mono);color:var(--muted);font-size:12px}
+
+/* shows: dates on motel key fobs */
+.show{display:grid;grid-template-columns:62px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.show:first-child{border-top:1px solid var(--line)}
+.fob{position:relative;background:var(--rust);color:var(--mustard);text-align:center;padding:16px 0 8px;border-radius:6px 6px 22px 22px;line-height:1;font-variant-numeric:tabular-nums}
+.fob::before{content:"";position:absolute;top:5px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--sleeve)}
+.fob .m{font-family:var(--mono);font-size:10px;letter-spacing:.12em}
+.fob .dd{font-family:var(--display);font-weight:900;font-size:26px;margin-top:3px}
+.show .v{min-width:0}
+.show .v b{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:15px}
+.show .v small{color:var(--muted);font-size:13px}
+.tix{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:.04em;padding:9px 12px;border:2px solid var(--rust);color:var(--rust);white-space:nowrap}
+.tix.low{background:var(--rust);color:var(--mustard)}
+.tix.sold{border-color:var(--line);color:var(--muted);pointer-events:none}
+.vacancy{display:flex;align-items:center;gap:12px;background:var(--bark);color:var(--mustard);padding:14px 16px}
+.vacancy b{font-family:var(--display);font-weight:900;letter-spacing:.12em;font-size:15px;color:var(--rust);text-shadow:0 0 10px rgba(213,71,31,.7);animation:buzz 6s infinite}
+.vacancy span{font-size:13px;line-height:1.3}
+@keyframes buzz{0%,92%,96%,100%{opacity:1}94%,98%{opacity:.35}}
+
+.notice{margin:0;font-size:16px;line-height:1.5;color:var(--wood);max-width:42ch}
+.hanger{align-self:center;position:relative;width:min(220px,62%);background:var(--rust);color:var(--mustard);text-align:center;
+  padding:74px 16px 26px;border-radius:10px 10px 4px 4px;transform:rotate(-3deg);box-shadow:0 14px 26px -12px rgba(43,21,10,.55);
+  transform-origin:50% 0;animation:sway 5s ease-in-out infinite}
+.hanger::before{content:"";position:absolute;top:18px;left:50%;width:46px;height:46px;margin-left:-23px;border-radius:50%;background:var(--sleeve)}
+.hanger::after{content:"";position:absolute;top:30px;left:50%;width:4px;height:30px;margin-left:-2px;background:var(--rust);border-radius:2px}
+.h-top{font-family:var(--script);font-size:22px;line-height:1;text-shadow:2px 2px 0 var(--bark)}
+.h-big{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:30px;line-height:.95;margin-top:8px;letter-spacing:.01em}
+.h-sub{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;margin-top:12px;opacity:.9}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(2deg)}}
+.log{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.log li{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:12px 2px;border-bottom:1px solid var(--line);align-items:baseline}
+.log .when{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--rust)}
+.log .what{color:var(--muted);font-size:14px}
+.log .what b{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:15px;color:var(--bark)}
+
+.form{gap:14px;background-image:none}
+.form label{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--wood);min-width:0}
+.form input,.form select,.form textarea{font:inherit;font-family:var(--body);font-size:16px;letter-spacing:0;text-transform:none;color:var(--bark);
+  background:var(--sleeve);border:0;border-bottom:2px solid var(--line);padding:10px 8px;border-radius:0;width:100%;min-width:0}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-bottom-color:var(--rust);background:var(--paper)}
+.form .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.register.form .btn{border:0;align-self:stretch;min-height:52px;font-size:14px;padding:10px 12px}
+.err{margin:0;color:var(--rust);font-size:14px;font-weight:700}
+.sent p{margin:0;font-size:15px;color:var(--wood)}
+.sent .actions{display:flex;flex-wrap:wrap;gap:8px}
+.sent .ghost{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;letter-spacing:.04em;padding:8px 14px;background:transparent;color:var(--rust);border:2px solid var(--rust)}
+.draftmsg{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12px;background:var(--sleeve);padding:12px;color:var(--bark);max-height:220px;overflow:auto}
+
+/* merch: gift-shop price tags */
+.shopfront{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:center;background:var(--rust);color:var(--mustard);padding:12px;transition:transform .12s}
+.shopfront:active{transform:scale(.98)}
+.shopfront img{width:72px;height:72px;object-fit:cover;box-shadow:0 0 0 2px var(--mustard)}
+.shopfront b{display:block;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:20px;line-height:1}
+.shopfront small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.06em;margin-top:6px;opacity:.9}
+.shopfront .go{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;background:var(--bark);padding:9px 12px;white-space:nowrap}
+.shelf{display:flex;flex-direction:column;gap:10px}
+.shelf-h{display:flex;align-items:center;gap:10px}
+.shelf-h::after{content:"";flex:1;height:1px;background:var(--line);order:1}
+.shelf-h .count{order:2;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}
+.tag{position:relative;display:flex;flex-direction:column;gap:6px;min-height:118px;background:var(--paper);border:1px solid var(--line);
+  padding:26px 12px 12px;border-radius:4px 4px 4px 4px;clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%,0 14px);transition:transform .12s, background .2s}
+.tag::before{content:"";position:absolute;top:9px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--sleeve);box-shadow:inset 0 0 0 1.5px var(--line)}
+.tag:active{transform:scale(.97)}
+.tag:hover{background:var(--sleeve)}
+.tag .pr{font-family:var(--mono);font-size:13px;color:var(--rust);font-variant-numeric:tabular-nums}
+.tag b{flex:1;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:14px;line-height:1.15;color:var(--bark)}
+.tag .v{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tags .tag:last-child:nth-child(odd){grid-column:1 / -1;min-height:0}
+
+/* guestbook */
+.register{background:var(--paper);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:10px;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--line) 31px 32px)}
+.register .kicker{color:var(--wood)}
+.register .addr{font-family:var(--mono);font-size:15px;word-break:break-all;user-select:all;color:var(--bark)}
+.register button{align-self:flex-start;}
+.register button:not(.ghost){font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;letter-spacing:.04em;background:var(--rust);color:var(--mustard);padding:10px 14px}
+
+.wall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 14px;padding:6px 4px}
+.pol{background:var(--paper);padding:7px 7px 26px;box-shadow:0 8px 18px -8px rgba(43,21,10,.45);position:relative}
+.pol img{width:100%;aspect-ratio:1;object-fit:cover}
+.pol:nth-child(4n+1){transform:rotate(-2.5deg)}
+.pol:nth-child(4n+2){transform:rotate(2deg)}
+.pol:nth-child(4n+3){transform:rotate(1.5deg)}
+.pol:nth-child(4n){transform:rotate(-1.5deg)}
+.pol::after{content:"";position:absolute;top:-9px;left:50%;width:46%;height:18px;margin-left:-23%;
+  background:rgba(231,222,206,.85);transform:rotate(-3deg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.pol figcaption{position:absolute;left:8px;right:8px;bottom:6px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:right}
+
+.label{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.label b{font-family:var(--display);font-weight:900;font-size:18px;letter-spacing:.02em;color:var(--mustard)}
+
+/* tab bar */
+.tabs{flex:none;position:relative;display:grid;grid-template-columns:repeat(6,1fr);background:var(--bark);user-select:none;
+  padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 10px;color:#b79c86;min-width:0;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;transition:color .2s}
+.tabs button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tabs button[aria-selected="true"]{color:var(--mustard)}
+.ind{position:absolute;top:0;left:0;height:3px;width:calc(100% / 6);background:var(--rust);will-change:transform;margin-left:env(safe-area-inset-left,0px)}
+
+@media (prefers-reduced-motion:reduce){ .vacancy b,.hanger{animation:none} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="badge"><img src="art/crest.jpg" alt="B&amp;B Motel crest"></div>
+  <div class="wm"><img src="art/wordmark.png" alt="Elektric Animals"></div>
+  <div class="rpm">33 RPM</div>
+</header>
+
+<main class="pager" id="pager"></main>
+<nav class="tabs" id="tabs" role="tablist" aria-label="Sections"><i class="ind" id="ind"></i></nav>
+
+<script>
+/* ============ EDIT YOUR LINKS HERE ============ */
+const BAND = "Elektric Animals";
+const Q = encodeURIComponent(BAND);
+const CONFIG = {
+  release: {
+    title:"B & B MOTEL", note:"Debut album · 2026",
+    spotify:"https://open.spotify.com/album/4GGklJN0KTuGr7M7XuwQPv",
+    apple:"https://music.apple.com/us/album/b-b-motel/6800029487",
+    tracks:["Lullaby","Must Be The Moon","Stuck","Got To Be","Obvious","My Mistake","Going Through The Motions","Desperate For It","Screw It","Everybody's Gone"]
+  },
+  members:["Nick Sanders","Will Hubert"],
+  listen: [
+    { name:"Spotify",     note:"Follow Elektric Animals",   url:"https://open.spotify.com/artist/7mXNzN8Qsvjt254lhRunKc", icon:"wave", primary:true },
+    { name:"Apple Music", note:"Stream in lossless",        url:"https://music.apple.com/us/artist/elektric-animals/1329823489", icon:"note" },
+    { name:"YouTube",     note:"Videos & live sets",        url:"https://www.youtube.com/@elektricanimals6046/videos", icon:"play" }
+  ],
+  discography: [
+    ["2026","B & B MOTEL","Album","https://open.spotify.com/album/4GGklJN0KTuGr7M7XuwQPv"],
+    ["2026","Screw It","EP","https://music.apple.com/us/album/screw-it-ep/6800027948"],
+    ["2026","Going Through The Motions (feat. Wild Truth)","EP","https://music.apple.com/us/album/going-through-the-motions-feat-wild-truth-ep/6800028854"],
+    ["2026","Stuck","Single","https://music.apple.com/us/album/stuck-single/6800028157"],
+    ["2026","Must Be The Moon","Single","https://music.apple.com/us/album/must-be-the-moon-single/6800027462"],
+    ["2025","Lullaby","Single","https://music.apple.com/us/album/lullaby-single/6798834476"],
+    ["2025","I Think So?","Single","https://music.apple.com/us/album/i-think-so-single/6799079795"],
+    ["2024","A Bear and The Bull","Album","https://music.apple.com/us/album/a-bear-and-the-bull/6798352458"],
+    ["2024","Ready To Go","Single","https://music.apple.com/us/album/ready-to-go-single/6798352084"],
+    ["2023","Feel Something","Single","https://music.apple.com/us/album/feel-something/6798351396"],
+    ["2021","Woe Is Me","Single","https://music.apple.com/us/album/woe-is-me/1563317427"]
+  ],
+  /* Add dates here when spring shows are booked, e.g.
+     { date:"2027-04-10", venue:"Venue", city:"City, ST", url:"https://tickets...", state:"on" }  (state: on / low / sold) */
+  shows: [],
+  merchStore: "https://ea-merch-shop.printify.me/",
+  merch: [
+    ["Tees", [
+      ["Garment-Dyed Band Tee","$34.99","https://ea-merch-shop.printify.me/product/33338081"],
+      ["Teddy Bear Tee","$30","https://ea-merch-shop.printify.me/product/24866850"],
+      ["Teddy Bear Ringer Tee","$35","https://ea-merch-shop.printify.me/product/24866784"],
+      ["Not The Devil's Music Tee","$30","https://ea-merch-shop.printify.me/product/23758175"],
+      ["Neon Medusa Tee","$30","https://ea-merch-shop.printify.me/product/23759929"],
+      ["Barry Tee — Black","$30","https://ea-merch-shop.printify.me/product/23760887"],
+      ["Barry Tee — White","$30","https://ea-merch-shop.printify.me/product/23760838"]
+    ]],
+    ["Crewnecks", [
+      ["Red Dragon Crewneck — Not The Devil's Music","$45","https://ea-merch-shop.printify.me/product/24848071"],
+      ["Retro Cartoon Crewneck","$45","https://ea-merch-shop.printify.me/product/24848014"],
+      ["Cartoon Band Crewneck","$45","https://ea-merch-shop.printify.me/product/24847995"]
+    ]],
+    ["Long sleeves", [
+      ["Cartoon Heart Long Sleeve","$40","https://ea-merch-shop.printify.me/product/24848198"],
+      ["Vintage Cartoon Long Sleeve","$40","https://ea-merch-shop.printify.me/product/24848173"]
+    ]],
+    ["Hats", [
+      ["Yellow Logo Trucker Hat","$30","https://ea-merch-shop.printify.me/product/24848309"],
+      ["Script Logo Trucker Hat","$30","https://ea-merch-shop.printify.me/product/23761097"]
+    ]]
+  ],
+  follow: [
+    { name:"Instagram", note:"@elektricanimals",          url:"https://www.instagram.com/elektricanimals/", icon:"camera", primary:true },
+    { name:"TikTok",    note:"@elektric_animals",         url:"https://www.tiktok.com/@elektric_animals", icon:"spark" },
+    { name:"YouTube",   note:"Subscribe to the channel",  url:"https://www.youtube.com/@elektricanimals6046?sub_confirmation=1", icon:"play" },
+    { name:"Facebook",  note:"News and announcements",    url:"https://www.facebook.com/Elektricanimals/", icon:"people" }
+  ],
+  booking: "elektricanimals@gmail.com",
+  photos: [
+    ["band-bw","Nick & Will"],["band-motel","Check-in"],["typewriter","Room 4"],["phone","Front desk"],
+    ["suitcase","Packed"],["dial","Call ahead"],["doors","Office"],["teddy","Left behind"],["carnations","Turndown"]
+  ]
+};
+/* ============================================== */
+
+const ICONS = {
+  home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
+  listen:'<path d="M3 14v-2a9 9 0 0118 0v2"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/>',
+  shows:'<rect x="6" y="9" width="12" height="13" rx="2"/><circle cx="12" cy="13" r="1.4"/><path d="M12 9V5a3 3 0 00-3-3"/>',
+  merch:'<path d="M8 3l-5 4 3 4 2-1v11h8V10l2 1 3-4-5-4c-1 2-2.5 3-4 3S9 5 8 3z"/>',
+  follow:'<path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2z"/><path d="M8 8h6M8 12h6M18 8h2v12"/>',
+  wave:'<path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/>',
+  note:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
+  disc:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/>',
+  play:'<rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/>',
+  cloud:'<path d="M7 18h11a4 4 0 000-8 6 6 0 00-11.5 1.5A3.3 3.3 0 007 18z"/>',
+  camera:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/>',
+  spark:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>',
+  people:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M22 20c-.6-2.4-2-4-4-5"/>',
+  bag:'<path d="M5 8h14l-1 13H6z"/><path d="M9 8V6a3 3 0 016 0v2"/>',
+  booking:'<path d="M4 17a8 8 0 0116 0z"/><path d="M2 20h20M12 9V6M10 6h4"/>'
+};
+const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg>`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ext = 'target="_blank" rel="noopener"';
+const row = l => `<a class="row${l.primary?' primary':''}" href="${esc(l.url)}" ${l.go!=null?`data-go="${l.go}"`:ext}>
+  <span class="ic">${svg(l.icon)}</span><span class="lbl"><b>${esc(l.name)}</b><small>${esc(l.note)}</small></span><span class="arr">${l.go!=null?'→':'↗'}</span></a>`;
+const MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const R = CONFIG.release;
+
+function nextShowNote(){
+  const s = CONFIG.shows.find(x => x.state!=="sold");
+  if(!s) return "Recording all winter · back on the road in spring";
+  const d = new Date(s.date+"T12:00:00");
+  return `Next: ${MON[d.getMonth()][0]+MON[d.getMonth()].slice(1).toLowerCase()} ${d.getDate()} · ${s.city}`;
+}
+
+const PANES = [
+  { id:"home", label:"Home", html: () => `
+    <div><div class="sleeve-head" id="fit">${esc(R.title)}</div></div>
+    <div class="codes"><span>Out now</span><span>Open Your Ears Records</span></div>
+    <a class="cover" href="${esc(R.spotify)}" ${ext}><img src="art/cover.jpg" alt="B & B MOTEL album cover" width="900" height="900"></a>
+    <div class="cta">
+      <a class="btn" href="${esc(R.spotify)}" ${ext}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>Spotify</a>
+      <a class="btn alt" href="${esc(R.apple)}" ${ext}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>Apple Music</a>
+    </div>
+    <div class="starring"><div class="s">Starring</div>
+      <div class="names"><span>${esc(CONFIG.members[0])}</span><img src="art/crest.jpg" alt=""><span>${esc(CONFIG.members[1])}</span></div></div>
+    <div class="links">
+      ${row({name:"Listen everywhere", note:"Spotify, Apple Music, YouTube", icon:"wave", url:"#listen", primary:true, go:1})}
+      ${row({name:"Upcoming shows", note: nextShowNote(), icon:"shows", url:"#shows", go:2})}
+      ${row({name:"Merch", note:"Tees, crewnecks, trucker hats", icon:"bag", url:"#merch", go:3})}
+      ${row({name:"Follow the band", note:"Socials and photos", icon:"follow", url:"#follow", go:4})}
+      ${row({name:"Book Elektric Animals", note:"Shows, events, press", icon:"booking", url:"#booking", go:5})}
+    </div>
+    <div class="label">Play at 33 RPM and keep out of direct sunlight</div>`},
+  { id:"listen", label:"Listen", html: () => `
+    <div><div class="kicker">The jukebox</div><h2>Put a record <em>on.</em></h2></div>
+    <div class="links">${CONFIG.listen.map(row).join("")}</div>
+    <div class="backcover">
+      <div class="over">“${esc(R.title)}”<br>The album from<br>Elektric Animals</div>
+      <ol class="tracklist">${R.tracks.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>
+      <div class="credit">Produced &amp; mixed by Will Beasley<br>Mastered by Paul Leavitt</div>
+    </div>
+    <div><div class="kicker">Discography</div>
+    <ul class="disco">${CONFIG.discography.map(t=>`<li><a href="${esc(t[3])}" ${ext}><span class="y">${esc(t[0])}</span><span class="t">${esc(t[1])}</span><span class="k">${esc(t[2])}</span></a></li>`).join("")}</ul></div>`},
+  { id:"shows", label:"Shows", html: () => CONFIG.shows.length ? `
+    <div><div class="kicker">Now booking</div><h2>Rooms <em>tonight.</em></h2></div>
+    <div class="vacancy"><b>VACANCY</b><span>Want us in your town? Tap Booking to send a request.</span></div>
+    <div>${CONFIG.shows.map(s=>{const d=new Date(s.date+"T12:00:00");
+      const btn = s.state==="sold"?'<span class="tix sold">Sold out</span>':`<a class="tix${s.state==="low"?" low":""}" href="${esc(s.url)}" ${ext}>${s.state==="low"?"Last tix":"Tickets"}</a>`;
+      return `<div class="show"><div class="fob"><div class="m">${MON[d.getMonth()]}</div><div class="dd">${String(d.getDate()).padStart(2,"0")}</div></div>
+      <div class="v"><b>${esc(s.venue)}</b><small>${esc(s.city)} · ${DOW[d.getDay()]}</small></div>${btn}</div>`}).join("")}</div>` : `
+    <div><div class="kicker">Front desk notice</div><h2>Closed for <em>the season.</em></h2></div>
+    <div class="vacancy"><b>NO VACANCY</b><span>Every room is booked. The band is using all of them to make a record.</span></div>
+    <div class="hanger" role="img" aria-label="Door hanger: Do not disturb, recording in progress">
+      <div class="h-top">Please</div><div class="h-big">Do Not<br>Disturb</div><div class="h-sub">Recording in progress</div>
+    </div>
+    <p class="notice">No shows on the books right now. We're holed up all winter writing and recording new songs, and we'll check back out onto the road in spring.</p>
+    <ol class="log">
+      <li><span class="when">Now – Winter</span><span class="what"><b>In the studio</b>Recording new material</span></li>
+      <li><span class="when">Spring</span><span class="what"><b>Back on the road</b>Tour dates announced here first</span></li>
+    </ol>
+    <div class="links">
+      ${row({name:"Get the spring dates", note:"Follow on Spotify for tour alerts", icon:"wave", url:CONFIG.listen[0].url, primary:true})}
+      ${row({name:"Book us for spring", note:"Send a booking request", icon:"booking", url:"#booking", go:5})}
+    </div>`},
+  { id:"merch", label:"Merch", html: () => `
+    <div><div class="kicker">Gift shop</div><h2>Take a piece <em>home.</em></h2></div>
+    <a class="shopfront" href="${esc(CONFIG.merchStore)}" ${ext}>
+      <img src="art/crest.jpg" alt="" width="72" height="72">
+      <span><b>EA Merch Shop</b><small>${CONFIG.merch.reduce((n,g)=>n+g[1].length,0)} items · printed to order</small></span>
+      <span class="go">Shop ↗</span>
+    </a>
+    ${CONFIG.merch.map(([cat,items])=>`<div class="shelf"><div class="shelf-h"><span class="kicker">${esc(cat)}</span><span class="count">${items.length}</span></div>
+      <div class="tags">${items.map(([n,pr,u])=>`<a class="tag" href="${esc(u)}" ${ext}><span class="pr">${esc(pr)}</span><b>${esc(n)}</b><span class="v">View ↗</span></a>`).join("")}</div></div>`).join("")}
+    <div class="label">Every piece is printed when you order it. Ships from Printify.</div>`},
+  { id:"follow", label:"Guests", html: () => `
+    <div><div class="kicker">Guestbook</div><h2>Sign <em>in.</em></h2></div>
+    <div class="links">${CONFIG.follow.map(row).join("")}</div>
+    <div class="links">${row({name:"Booking & press", note:"Make a reservation with the band", icon:"booking", url:"#booking", go:5})}</div>
+    <div><div class="kicker">Snapshots from the B &amp; B</div></div>
+    <div class="wall">${CONFIG.photos.slice(0,8).map(p=>`<figure class="pol" style="margin:0"><img src="art/${p[0]}.jpg" alt="${esc(p[1])}" loading="lazy"><figcaption>${esc(p[1])}</figcaption></figure>`).join("")}</div>
+    <div class="label"><b>OYE</b>Open Your Ears Records<br>OYER2025-26LP/V<br>© ${new Date().getFullYear()} Elektric Animals</div>`},
+  { id:"booking", label:"Booking", html: () => `
+    <div><div class="kicker">Front desk · Reservations</div><h2>Make a <em>reservation.</em></h2></div>
+    <p class="notice">Shows, festivals, private events, press and interviews. Fill this in and it goes to the band's inbox from your email app.</p>
+    <form class="register form" id="bookForm" novalidate>
+      <div class="kicker">Guest registration card</div>
+      <div class="two">
+        <label>Your name<input id="b-name" name="name" autocomplete="name" required></label>
+        <label>Your email<input id="b-email" name="email" type="email" autocomplete="email" inputmode="email" required></label>
+      </div>
+      <label>What's the booking?
+        <select id="b-type" name="type">
+          <option>Show or festival</option><option>Private event</option><option>Press or interview</option><option>Something else</option>
+        </select></label>
+      <div class="two">
+        <label>Venue or outlet<input id="b-org" name="org" autocomplete="organization"></label>
+        <label>City<input id="b-city" name="city" autocomplete="address-level2"></label>
+      </div>
+      <div class="two">
+        <label>Date (if known)<input id="b-date" name="date" type="date"></label>
+        <label>Budget or offer<input id="b-budget" name="budget" placeholder="Optional"></label>
+      </div>
+      <label>Details<textarea id="b-msg" name="message" rows="4" required placeholder="Tell us about the night, the room, the crowd."></textarea></label>
+      <p class="err" id="b-err" hidden></p>
+      <button type="submit" class="btn">Open in my email app</button>
+    </form>
+    <div class="register sent" id="bookSent" hidden>
+      <div class="kicker">Almost there</div>
+      <p>Your email app should have opened with the message ready to send. If it didn't, copy the message and email it to the address below.</p>
+      <div class="actions"><button type="button" id="copyMsg">Copy message</button><button type="button" id="reopen" class="ghost">Open email again</button></div>
+      <pre class="draftmsg" id="msgText"></pre>
+    </div>
+    <div class="register"><div class="kicker">Or write to us directly</div><div class="addr" id="addr">${esc(CONFIG.booking)}</div>
+      <button type="button" id="copy">Copy email</button></div>`}
+];
+
+/* build */
+const pager = document.getElementById("pager"), tabs = document.getElementById("tabs"), ind = document.getElementById("ind");
+PANES.forEach((p,i)=>{
+  const sec = document.createElement("section");
+  sec.className="pane"; sec.id="p-"+p.id; sec.setAttribute("role","tabpanel"); sec.setAttribute("aria-label",p.label);
+  sec.innerHTML = `<div class="inner">${p.html()}</div>`;
+  pager.appendChild(sec);
+  const b = document.createElement("button");
+  b.type="button"; b.setAttribute("role","tab"); b.setAttribute("aria-selected", i===0);
+  b.innerHTML = svg(p.id)+`<span>${p.label}</span>`;
+  b.addEventListener("click", ()=> go(i));
+  tabs.appendChild(b);
+});
+
+/* fit the sleeve headline to the column width */
+function fit(){
+  const el=document.getElementById("fit"); if(!el) return;
+  const w=el.parentElement.clientWidth; el.style.fontSize="100px";
+  el.style.fontSize = Math.floor(100*w/el.offsetWidth*0.99)+"px";
+}
+fit(); document.fonts && document.fonts.ready.then(fit);
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let current = 0;
+function go(i, instant){
+  if(current===i) pager.children[i].scrollTo({top:0, behavior: reduce?"auto":"smooth"});
+  pager.scrollTo({left: i*pager.clientWidth, behavior: instant||reduce ? "auto" : "smooth"});
+}
+pager.addEventListener("click", e=>{
+  const a = e.target.closest("[data-go]"); if(!a) return;
+  e.preventDefault(); go(+a.dataset.go);
+});
+function sync(){
+  const w = pager.clientWidth || 1, x = pager.scrollLeft;
+  ind.style.transform = `translateX(${(x/w)*100}%)`;
+  const i = Math.round(x/w);
+  if(i!==current){
+    current=i;
+    [...tabs.querySelectorAll("button")].forEach((b,k)=>b.setAttribute("aria-selected", k===i));
+    try{ history.replaceState(null,"","#"+PANES[i].id); }catch(e){}
+  }
+}
+pager.addEventListener("scroll", ()=>requestAnimationFrame(sync), {passive:true});
+addEventListener("resize", ()=>{ fit(); go(current,true); });
+addEventListener("keydown", e=>{
+  if(e.key==="ArrowRight") go(Math.min(current+1,PANES.length-1));
+  if(e.key==="ArrowLeft") go(Math.max(current-1,0));
+});
+const start = PANES.findIndex(p=>"#"+p.id===location.hash);
+if(start>0) requestAnimationFrame(()=>{ go(start,true); sync(); });
+
+/* booking form → prefilled email */
+let mailHref="";
+const bf=document.getElementById("bookForm");
+function compose(){
+  const v=id=>document.getElementById(id).value.trim();
+  const type=v("b-type"), who=v("b-name"), org=v("b-org"), city=v("b-city");
+  const subject=`Booking request: ${type}${org?" at "+org:""}${city?" ("+city+")":""}`;
+  const lines=[
+    `Name: ${who}`, `Email: ${v("b-email")}`, `Type: ${type}`,
+    org?`Venue / outlet: ${org}`:null, city?`City: ${city}`:null, v("b-date")?`Date: ${v("b-date")}`:null, v("b-budget")?`Budget / offer: ${v("b-budget")}`:null,
+    "", v("b-msg"), "", "Sent from the Elektric Animals page"
+  ].filter(x=>x!=null);
+  const body=lines.join("\n").replace(/\n\n\n+/g,"\n\n");
+  return {subject, body, text:`To: ${CONFIG.booking}\nSubject: ${subject}\n\n${body}`};
+}
+bf.addEventListener("submit", e=>{
+  e.preventDefault();
+  const err=document.getElementById("b-err");
+  const missing=[["b-name","your name"],["b-email","your email"],["b-msg","a few details"]].filter(([id])=>!document.getElementById(id).value.trim());
+  const em=document.getElementById("b-email").value.trim();
+  if(missing.length){ err.textContent="Please add "+missing.map(m=>m[1]).join(", ")+"."; err.hidden=false; document.getElementById(missing[0][0]).focus(); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ err.textContent="That email address looks incomplete. Check it so we can write back."; err.hidden=false; document.getElementById("b-email").focus(); return; }
+  err.hidden=true;
+  const m=compose();
+  mailHref=`mailto:${CONFIG.booking}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
+  document.getElementById("msgText").textContent=m.text;
+  document.getElementById("bookSent").hidden=false;
+  location.href=mailHref;
+  document.getElementById("bookSent").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
+});
+document.getElementById("reopen").onclick=()=>{ if(mailHref) location.href=mailHref; };
+document.getElementById("copyMsg").addEventListener("click", e=>{
+  const btn=e.currentTarget, txt=document.getElementById("msgText").textContent;
+  const done=t=>{btn.textContent=t; setTimeout(()=>btn.textContent="Copy message",1600)};
+  const sel=()=>{const r=document.createRange(); r.selectNodeContents(document.getElementById("msgText")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); done("Selected, copy it");};
+  try{ navigator.clipboard.writeText(txt).then(()=>done("Copied"), sel); }catch(er){ sel(); }
+});
+
+/* copy email */
+document.getElementById("copy").addEventListener("click", e=>{
+  const btn = e.currentTarget;
+  const done = t => { btn.textContent=t; setTimeout(()=>btn.textContent="Copy email",1600); };
+  const sel = ()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("addr")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); done("Selected, copy it"); };
+  try{ navigator.clipboard.writeText(CONFIG.booking).then(()=>done("Copied"), sel); }catch(err){ sel(); }
+});
+</script>
+</body>
+</html>
