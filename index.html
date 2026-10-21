@@ -133,6 +133,36 @@ h2 em{font-style:normal;color:var(--rust)}
 .tracklist li{counter-increment:t;display:flex;align-items:baseline;justify-content:center;gap:8px;text-align:center;
   font-family:var(--display);font-weight:700;text-transform:uppercase;color:var(--mustard);font-size:clamp(14px,4.4vw,17px);line-height:1.15}
 .tracklist li::before{content:counter(t);font-family:var(--mono);font-size:10px;opacity:.6;font-weight:500}
+.backcover .hint{margin:0;font-size:14px;color:var(--wood);text-align:center}
+.board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px 8px;width:100%;max-width:420px}
+.key{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 2px 8px;min-width:0;background:var(--rust);color:var(--mustard);border-radius:6px 6px 20px 20px;cursor:pointer;transition:transform .15s, background .2s;transform-origin:50% 0}
+.key::before{content:"";position:absolute;top:5px;left:50%;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--sky)}
+.key .no{font-family:var(--display);font-weight:900;font-size:20px;line-height:1;font-variant-numeric:tabular-nums}
+.key .kn{font-family:var(--mono);font-size:8px;letter-spacing:.04em;text-transform:uppercase;line-height:1.15;text-align:center;opacity:.85;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;max-width:100%}
+.key:hover{transform:rotate(-4deg)}
+.key[aria-pressed="true"]{background:var(--bark);transform:rotate(-6deg) translateY(4px)}
+.roomcard{width:100%;max-width:420px;background:var(--paper);border:1px solid var(--line);padding:14px;min-height:72px;display:flex;flex-direction:column;gap:10px}
+.rc-empty{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:center;margin:auto}
+.rc-top{display:flex;align-items:baseline;gap:10px}
+.rc-top .rn{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--rust)}
+.rc-top .rl{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rc-title{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:22px;line-height:1;color:var(--bark)}
+.rc-story{margin:0;font-size:14px;color:var(--wood)}
+.rc-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rc-acts .btn{min-height:44px;font-size:12px}
+.sp iframe{display:block;width:100%;height:352px;border:0;border-radius:12px}
+/* vinyl offer over the cover */
+.cover .seal{position:absolute;top:12px;right:12px;width:76px;height:76px;border-radius:50%;background:var(--mustard);color:var(--bark);display:grid;place-content:center;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;transform:rotate(12deg);box-shadow:0 4px 12px rgba(0,0,0,.3);border:2px dashed var(--bark)}
+.cover .seal b{display:block;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:0;line-height:1}
+.vinyl{position:absolute;left:12px;right:12px;bottom:12px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:10px 12px;background:var(--bark);color:var(--mustard);box-shadow:0 10px 24px rgba(0,0,0,.45);transition:transform .15s}
+.vinyl:active{transform:scale(.98)}
+.vinyl .disc{width:52px;height:52px;border-radius:50%;flex:none;background:radial-gradient(circle,var(--paper) 0 8%,#4fa8d8 9% 30%,rgba(120,195,235,.75) 31% 33%,#5bb3e0 34% 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.35),0 0 0 1px rgba(0,0,0,.3);animation:spin 6s linear infinite}
+.vinyl .disc::after{content:"";display:block;width:100%;height:100%;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 3px,rgba(255,255,255,.12) 3px 4px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vinyl .vt{min-width:0;display:flex;flex-direction:column;gap:2px}
+.vinyl .vt b{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:16px;line-height:1.05}
+.vinyl .vt small{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.vinyl .vgo{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;background:var(--rust);color:var(--mustard);padding:10px 12px;white-space:nowrap}
 .backcover .credit{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--wood);text-align:center}
 
 .disco{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
@@ -245,7 +275,7 @@ h2 em{font-style:normal;color:var(--rust)}
 .tabs button[aria-selected="true"]{color:var(--mustard)}
 .ind{position:absolute;top:0;left:0;height:3px;width:calc(100% / 6);background:var(--rust);will-change:transform;margin-left:env(safe-area-inset-left,0px)}
 
-@media (prefers-reduced-motion:reduce){ .vacancy b,.hanger{animation:none} }
+@media (prefers-reduced-motion:reduce){ .vacancy b,.hanger,.vinyl .disc{animation:none} }
 </style>
 </head>
 <body>
@@ -271,6 +301,20 @@ const CONFIG = {
   },
   members:["Nick Sanders","Will Hubert"],
   video:{ id:"UiPY5gbM2io", title:"LULLABY" },
+  vinyl:{ url:"https://oyerecs.com/product/preorder-elektric-animals-bb-motel-transparent-blue-vinyl/", label:"Transparent Blue Vinyl", copies:250, price:"$25" },
+  /* Pick a room: [title, length, spotify track id, apple music link, story (optional)] */
+  rooms:[
+    ["Lullaby","3:21","2GEUdDfjfggZJhQnwPAG2v","https://music.apple.com/us/album/lullaby/6800029487?i=6800029634",""],
+    ["Must Be The Moon","3:03","68kPOCGuZMgBRkuJ2XbBN9","https://music.apple.com/us/album/must-be-the-moon/6800029487?i=6800029637",""],
+    ["Stuck","3:31","50M6cgZ9obaNpdtRxCWV0M","https://music.apple.com/us/album/stuck/6800029487?i=6800029638",""],
+    ["Got To Be","3:29","50Jx7wk5RjbPLaSQNbuVO3","https://music.apple.com/us/album/got-to-be/6800029487?i=6800029639",""],
+    ["Obvious","2:42","6t73xSxNDYKVKlyK3HYPc4","https://music.apple.com/us/album/b-b-motel/6800029487",""],
+    ["My Mistake","2:39","3ldsPO0okmIUu4mPyeYw3f","https://music.apple.com/us/album/my-mistake/6800029487?i=6800029641",""],
+    ["Going Through The Motions","3:19","2XySAG5tgIFDFVA74FmTR5","https://music.apple.com/us/album/b-b-motel/6800029487","feat. Wild Truth"],
+    ["Desperate For It","3:18","1TZRWAhMEy1SXvttRRmk7V","https://music.apple.com/us/album/desperate-for-it/6800029487?i=6800029643",""],
+    ["Screw It","3:32","5SpJQR1cBL0sOJihjKGxcR","https://music.apple.com/us/album/screw-it/6800029487?i=6800029644",""],
+    ["Everybody's Gone","3:38","2g9PSGxf1AnOnj433rvs6i","https://music.apple.com/us/album/everybodys-gone/6800029487?i=6800029649",""]
+  ],
   listen: [
     { name:"Spotify",     note:"Follow Elektric Animals",   url:"https://open.spotify.com/artist/7mXNzN8Qsvjt254lhRunKc", icon:"wave", primary:true },
     { name:"Apple Music", note:"Stream in lossless",        url:"https://music.apple.com/us/artist/elektric-animals/1329823489", icon:"note" },
@@ -366,7 +410,15 @@ const PANES = [
   { id:"home", label:"Home", html: () => `
     <div><div class="sleeve-head" id="fit">${esc(R.title)}</div></div>
     <div class="codes"><span>Out now</span><span>Open Your Ears Records</span></div>
-    <a class="cover" href="${esc(R.spotify)}" ${ext}><img src="art/cover.jpg" alt="B & B MOTEL album cover" width="900" height="900"></a>
+    <div class="cover">
+      <img src="art/cover.jpg" alt="B & B MOTEL album cover" width="900" height="900">
+      <span class="seal" aria-hidden="true"><b>${CONFIG.vinyl.copies}</b>copies<br>only</span>
+      <a class="vinyl" href="${esc(CONFIG.vinyl.url)}" ${ext}>
+        <span class="disc" aria-hidden="true"></span>
+        <span class="vt"><small>Pre-order · Limited edition</small><b>${esc(CONFIG.vinyl.label)}</b><small>Only ${CONFIG.vinyl.copies} pressed · ${esc(CONFIG.vinyl.price)}</small></span>
+        <span class="vgo">Get it ↗</span>
+      </a>
+    </div>
     <div class="cta">
       <a class="btn" href="${esc(R.spotify)}" ${ext}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>Spotify</a>
       <a class="btn alt" href="${esc(R.apple)}" ${ext}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>Apple Music</a>
@@ -392,10 +444,15 @@ const PANES = [
     <div class="label">Play at 33 RPM and keep out of direct sunlight</div>`},
   { id:"listen", label:"Listen", html: () => `
     <div><div class="kicker">The jukebox</div><h2>Put a record <em>on.</em></h2></div>
+    <div class="sp" id="spPlayer" data-album="${esc(R.spotify.split('/').pop())}">
+      <a class="row primary" href="${esc(R.spotify)}" ${ext}><span class="ic">${svg("wave")}</span><span class="lbl"><b>Play B &amp; B MOTEL</b><small>Open the album on Spotify</small></span><span class="arr">↗</span></a>
+    </div>
     <div class="links">${CONFIG.listen.map(row).join("")}</div>
     <div class="backcover">
-      <div class="over">“${esc(R.title)}”<br>The album from<br>Elektric Animals</div>
-      <ol class="tracklist">${R.tracks.map(t=>`<li>${esc(t)}</li>`).join("")}</ol>
+      <div class="over">“${esc(R.title)}”<br>Pick a room</div>
+      <p class="hint">Every room on the album has a key. Tap one to check in.</p>
+      <div class="board" role="list">${CONFIG.rooms.map((r,i)=>`<button type="button" class="key" role="listitem" data-room="${i}" aria-pressed="false" aria-label="Room ${i+1}: ${esc(r[0])}"><span class="no">${String(i+1).padStart(2,"0")}</span><span class="kn">${esc(r[0])}</span></button>`).join("")}</div>
+      <div class="roomcard" id="roomCard" aria-live="polite"><span class="rc-empty">No room selected yet. Pick a key.</span></div>
       <div class="credit">Produced &amp; mixed by Will Beasley<br>Mastered by Paul Leavitt</div>
     </div>
     <div><div class="kicker">Discography</div>
@@ -498,6 +555,29 @@ addEventListener("keydown", e=>{
 });
 const start = PANES.findIndex(p=>"#"+p.id===location.hash);
 if(start>0) requestAnimationFrame(()=>{ go(start,true); sync(); });
+
+/* Spotify player: real embed on the live site, a link card elsewhere */
+(function(){
+  const box=document.getElementById("spPlayer"); const h=location.hostname;
+  if(!/elektricanimals\.com$|github\.io$|^localhost$|^$/.test(h)) return;
+  const f=document.createElement("iframe");
+  f.src=`https://open.spotify.com/embed/album/${box.dataset.album}?utm_source=generator`;
+  f.title="B & B MOTEL on Spotify"; f.loading="lazy";
+  f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+  box.replaceChildren(f);
+})();
+
+/* Pick a room */
+(function(){
+  const card=document.getElementById("roomCard"), keys=[...document.querySelectorAll(".key")];
+  keys.forEach(k=>k.addEventListener("click",()=>{
+    const i=+k.dataset.room, r=CONFIG.rooms[i];
+    keys.forEach(x=>x.setAttribute("aria-pressed", x===k));
+    card.innerHTML=`<div class="rc-top"><span class="rn">Room ${String(i+1).padStart(2,"0")} · Checked in</span><span class="rl">${esc(r[1])}</span></div>
+      <div class="rc-title">${esc(r[0])}</div>${r[4]?`<p class="rc-story">${esc(r[4])}</p>`:""}
+      <div class="rc-acts"><a class="btn" href="https://open.spotify.com/track/${r[2]}" ${ext}>Spotify</a><a class="btn alt" href="${esc(r[3])}" ${ext}>Apple Music</a></div>`;
+  }));
+})();
 
 /* music video: load the player only when tapped */
 document.getElementById("mvPlay").addEventListener("click", ()=>{
