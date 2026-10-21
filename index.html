@@ -613,7 +613,7 @@ document.querySelectorAll("form.desk").forEach(form=>{
     const fallback=()=>{ if(done) return; done=true; btn.disabled=false; msg.textContent="Finishing sign-up in a new tab…"; HTMLFormElement.prototype.submit.call(form); };
     window[cb]=r=>{ done=true; delete window[cb]; btn.disabled=false;
       const t=String(r&&r.msg||"").replace(/<[^>]+>/g,"");
-      if(r&&r.result==="success"){ form.classList.add("done"); msg.textContent="You're checked in. Watch your inbox to confirm."; }
+      if(r&&r.result==="success"){ form.classList.add("done"); msg.textContent=/confirm/i.test(t)?"Almost there. Check your inbox and tap the link to confirm.":"You're checked in. You'll hear about spring dates first."; }
       else if(/already subscribed/i.test(t)){ form.classList.add("done"); msg.textContent="You're already on the list. See you in spring."; }
       else { msg.textContent=t.replace(/^\d+\s*-\s*/,"")||"Something went wrong. Please try again."; }
     };
