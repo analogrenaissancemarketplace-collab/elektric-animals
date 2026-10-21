@@ -180,7 +180,11 @@ h2 em{font-style:normal;color:var(--rust)}
 .register.form .btn{border:0;align-self:stretch;min-height:52px;font-size:14px;padding:10px 12px}
 .err{margin:0;color:var(--rust);font-size:14px;font-weight:700}
 .sent p{margin:0;font-size:15px;color:var(--wood)}
-.sent .actions{display:flex;flex-wrap:wrap;gap:8px}
+.sent .actions,.mail .actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.register.mail{background-image:none;gap:14px}
+.mail .addr{font-size:18px}
+.mail .btn{min-height:46px;padding:10px 18px}
+.mail .ghost{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;letter-spacing:.04em;padding:10px 14px;background:transparent;color:var(--rust);border:2px solid var(--rust);min-height:46px}
 .sent .ghost{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;letter-spacing:.04em;padding:8px 14px;background:transparent;color:var(--rust);border:2px solid var(--rust)}
 .draftmsg{margin:0;white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:12px;background:var(--sleeve);padding:12px;color:var(--bark);max-height:220px;overflow:auto}
 
@@ -327,7 +331,7 @@ const ICONS = {
   listen:'<path d="M3 14v-2a9 9 0 0118 0v2"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/>',
   shows:'<rect x="6" y="9" width="12" height="13" rx="2"/><circle cx="12" cy="13" r="1.4"/><path d="M12 9V5a3 3 0 00-3-3"/>',
   merch:'<path d="M8 3l-5 4 3 4 2-1v11h8V10l2 1 3-4-5-4c-1 2-2.5 3-4 3S9 5 8 3z"/>',
-  follow:'<path d="M4 4h12a2 2 0 012 2v14H6a2 2 0 01-2-2z"/><path d="M8 8h6M8 12h6M18 8h2v12"/>',
+  follow:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c1-3.5 3.8-5.5 7-5.5s6 2 7 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M22 20c-.6-2.4-2-4-4-5"/>',
   wave:'<path d="M2 12h3l2-6 3 12 3-9 2 5 2-2h5"/>',
   note:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
   disc:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/>',
@@ -370,7 +374,7 @@ const PANES = [
       ${row({name:"Listen everywhere", note:"Spotify, Apple Music, YouTube", icon:"wave", url:"#listen", primary:true, go:1})}
       ${row({name:"Upcoming shows", note: nextShowNote(), icon:"shows", url:"#shows", go:2})}
       ${row({name:"Merch", note:"Tees, crewnecks, trucker hats", icon:"bag", url:"#merch", go:3})}
-      ${row({name:"Follow the band", note:"Socials and photos", icon:"follow", url:"#follow", go:4})}
+      ${row({name:"Follow the band", note:"Instagram, TikTok, YouTube, Facebook", icon:"follow", url:"#follow", go:4})}
       ${row({name:"Book Elektric Animals", note:"Shows, events, press", icon:"booking", url:"#booking", go:5})}
     </div>
     <div class="label">Play at 33 RPM and keep out of direct sunlight</div>`},
@@ -386,7 +390,7 @@ const PANES = [
     <ul class="disco">${CONFIG.discography.map(t=>`<li><a href="${esc(t[3])}" ${ext}><span class="y">${esc(t[0])}</span><span class="t">${esc(t[1])}</span><span class="k">${esc(t[2])}</span></a></li>`).join("")}</ul></div>`},
   { id:"shows", label:"Shows", html: () => CONFIG.shows.length ? `
     <div><div class="kicker">Now booking</div><h2>Rooms <em>tonight.</em></h2></div>
-    <div class="vacancy"><b>VACANCY</b><span>Want us in your town? Tap Booking to send a request.</span></div>
+    <div class="vacancy"><b>VACANCY</b><span>Want us in your town? Email us to book a show.</span></div>
     <div>${CONFIG.shows.map(s=>{const d=new Date(s.date+"T12:00:00");
       const btn = s.state==="sold"?'<span class="tix sold">Sold out</span>':`<a class="tix${s.state==="low"?" low":""}" href="${esc(s.url)}" ${ext}>${s.state==="low"?"Last tix":"Tickets"}</a>`;
       return `<div class="show"><div class="fob"><div class="m">${MON[d.getMonth()]}</div><div class="dd">${String(d.getDate()).padStart(2,"0")}</div></div>
@@ -403,7 +407,7 @@ const PANES = [
     </ol>
     <div class="links">
       ${row({name:"Get the spring dates", note:"Follow on Spotify for tour alerts", icon:"wave", url:CONFIG.listen[0].url, primary:true})}
-      ${row({name:"Book us for spring", note:"Send a booking request", icon:"booking", url:"#booking", go:5})}
+      ${row({name:"Book us for spring", note:"Email the band", icon:"booking", url:"#booking", go:5})}
     </div>`},
   { id:"merch", label:"Merch", html: () => `
     <div><div class="kicker">Gift shop</div><h2>Take a piece <em>home.</em></h2></div>
@@ -415,46 +419,21 @@ const PANES = [
     ${CONFIG.merch.map(([cat,items])=>`<div class="shelf"><div class="shelf-h"><span class="kicker">${esc(cat)}</span><span class="count">${items.length}</span></div>
       <div class="tags">${items.map(([n,pr,u])=>`<a class="tag" href="${esc(u)}" ${ext}><span class="pr">${esc(pr)}</span><b>${esc(n)}</b><span class="v">View ↗</span></a>`).join("")}</div></div>`).join("")}
     <div class="label">Every piece is printed when you order it. Ships from Printify.</div>`},
-  { id:"follow", label:"Guests", html: () => `
-    <div><div class="kicker">Guestbook</div><h2>Sign <em>in.</em></h2></div>
+  { id:"follow", label:"Socials", html: () => `
+    <div><div class="kicker">Socials</div><h2>Follow <em>along.</em></h2></div>
     <div class="links">${CONFIG.follow.map(row).join("")}</div>
-    <div class="links">${row({name:"Booking & press", note:"Make a reservation with the band", icon:"booking", url:"#booking", go:5})}</div>
-    <div><div class="kicker">Snapshots from the B &amp; B</div></div>
-    <div class="wall">${CONFIG.photos.slice(0,8).map(p=>`<figure class="pol" style="margin:0"><img src="art/${p[0]}.jpg" alt="${esc(p[1])}" loading="lazy"><figcaption>${esc(p[1])}</figcaption></figure>`).join("")}</div>
-    <div class="label"><b>OYE</b>Open Your Ears Records<br>OYER2025-26LP/V<br>© ${new Date().getFullYear()} Elektric Animals</div>`},
+    <div class="label"><b>OYE</b>Open Your Ears Records<br>© ${new Date().getFullYear()} Elektric Animals</div>`},
   { id:"booking", label:"Booking", html: () => `
-    <div><div class="kicker">Front desk · Reservations</div><h2>Make a <em>reservation.</em></h2></div>
-    <p class="notice">Shows, festivals, private events, press and interviews. Fill this in and it goes to the band's inbox from your email app.</p>
-    <form class="register form" id="bookForm" novalidate>
-      <div class="kicker">Guest registration card</div>
-      <div class="two">
-        <label>Your name<input id="b-name" name="name" autocomplete="name" required></label>
-        <label>Your email<input id="b-email" name="email" type="email" autocomplete="email" inputmode="email" required></label>
+    <div><div class="kicker">Front desk · Booking &amp; press</div><h2>Drop us <em>a line.</em></h2></div>
+    <p class="notice">Shows, festivals, private events, press and interviews. Email the band directly and we'll get back to you.</p>
+    <div class="register mail">
+      <div class="kicker">Email the band</div>
+      <div class="addr" id="addr">${esc(CONFIG.booking)}</div>
+      <div class="actions">
+        <a class="btn" href="mailto:${esc(CONFIG.booking)}?subject=${encodeURIComponent("Booking inquiry")}">Email us</a>
+        <button type="button" id="copy" class="ghost">Copy email</button>
       </div>
-      <label>What's the booking?
-        <select id="b-type" name="type">
-          <option>Show or festival</option><option>Private event</option><option>Press or interview</option><option>Something else</option>
-        </select></label>
-      <div class="two">
-        <label>Venue or outlet<input id="b-org" name="org" autocomplete="organization"></label>
-        <label>City<input id="b-city" name="city" autocomplete="address-level2"></label>
-      </div>
-      <div class="two">
-        <label>Date (if known)<input id="b-date" name="date" type="date"></label>
-        <label>Budget or offer<input id="b-budget" name="budget" placeholder="Optional"></label>
-      </div>
-      <label>Details<textarea id="b-msg" name="message" rows="4" required placeholder="Tell us about the night, the room, the crowd."></textarea></label>
-      <p class="err" id="b-err" hidden></p>
-      <button type="submit" class="btn">Open in my email app</button>
-    </form>
-    <div class="register sent" id="bookSent" hidden>
-      <div class="kicker">Almost there</div>
-      <p>Your email app should have opened with the message ready to send. If it didn't, copy the message and email it to the address below.</p>
-      <div class="actions"><button type="button" id="copyMsg">Copy message</button><button type="button" id="reopen" class="ghost">Open email again</button></div>
-      <pre class="draftmsg" id="msgText"></pre>
-    </div>
-    <div class="register"><div class="kicker">Or write to us directly</div><div class="addr" id="addr">${esc(CONFIG.booking)}</div>
-      <button type="button" id="copy">Copy email</button></div>`}
+    </div>`}
 ];
 
 /* build */
@@ -507,44 +486,6 @@ addEventListener("keydown", e=>{
 });
 const start = PANES.findIndex(p=>"#"+p.id===location.hash);
 if(start>0) requestAnimationFrame(()=>{ go(start,true); sync(); });
-
-/* booking form → prefilled email */
-let mailHref="";
-const bf=document.getElementById("bookForm");
-function compose(){
-  const v=id=>document.getElementById(id).value.trim();
-  const type=v("b-type"), who=v("b-name"), org=v("b-org"), city=v("b-city");
-  const subject=`Booking request: ${type}${org?" at "+org:""}${city?" ("+city+")":""}`;
-  const lines=[
-    `Name: ${who}`, `Email: ${v("b-email")}`, `Type: ${type}`,
-    org?`Venue / outlet: ${org}`:null, city?`City: ${city}`:null, v("b-date")?`Date: ${v("b-date")}`:null, v("b-budget")?`Budget / offer: ${v("b-budget")}`:null,
-    "", v("b-msg"), "", "Sent from the Elektric Animals page"
-  ].filter(x=>x!=null);
-  const body=lines.join("\n").replace(/\n\n\n+/g,"\n\n");
-  return {subject, body, text:`To: ${CONFIG.booking}\nSubject: ${subject}\n\n${body}`};
-}
-bf.addEventListener("submit", e=>{
-  e.preventDefault();
-  const err=document.getElementById("b-err");
-  const missing=[["b-name","your name"],["b-email","your email"],["b-msg","a few details"]].filter(([id])=>!document.getElementById(id).value.trim());
-  const em=document.getElementById("b-email").value.trim();
-  if(missing.length){ err.textContent="Please add "+missing.map(m=>m[1]).join(", ")+"."; err.hidden=false; document.getElementById(missing[0][0]).focus(); return; }
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ err.textContent="That email address looks incomplete. Check it so we can write back."; err.hidden=false; document.getElementById("b-email").focus(); return; }
-  err.hidden=true;
-  const m=compose();
-  mailHref=`mailto:${CONFIG.booking}?subject=${encodeURIComponent(m.subject)}&body=${encodeURIComponent(m.body)}`;
-  document.getElementById("msgText").textContent=m.text;
-  document.getElementById("bookSent").hidden=false;
-  location.href=mailHref;
-  document.getElementById("bookSent").scrollIntoView({behavior: reduce?"auto":"smooth", block:"start"});
-});
-document.getElementById("reopen").onclick=()=>{ if(mailHref) location.href=mailHref; };
-document.getElementById("copyMsg").addEventListener("click", e=>{
-  const btn=e.currentTarget, txt=document.getElementById("msgText").textContent;
-  const done=t=>{btn.textContent=t; setTimeout(()=>btn.textContent="Copy message",1600)};
-  const sel=()=>{const r=document.createRange(); r.selectNodeContents(document.getElementById("msgText")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); done("Selected, copy it");};
-  try{ navigator.clipboard.writeText(txt).then(()=>done("Copied"), sel); }catch(er){ sel(); }
-});
 
 /* copy email */
 document.getElementById("copy").addEventListener("click", e=>{
