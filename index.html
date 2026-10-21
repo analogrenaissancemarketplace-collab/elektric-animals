@@ -151,6 +151,24 @@ h2 em{font-style:normal;color:var(--rust)}
 .rc-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .rc-acts .btn{min-height:44px;font-size:12px}
 .sp iframe{display:block;width:100%;height:352px;border:0;border-radius:12px}
+/* front desk signup */
+.desk{position:relative;background:var(--bark);color:var(--sleeve);padding:16px;display:flex;flex-direction:column;gap:10px}
+.desk.big{border:2px solid var(--mustard)}
+.desk-head{display:flex;align-items:center;gap:12px}
+.desk-head .bell{width:40px;height:40px;flex:none;display:grid;place-items:center;background:var(--rust)}
+.desk-head .bell svg{width:22px;height:22px;fill:none;stroke:var(--mustard);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.desk-head .kicker{color:var(--mustard)}
+.desk-head b{display:block;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:18px;line-height:1.05;color:var(--sleeve)}
+.desk p{margin:0;font-size:14px;line-height:1.45;color:#e6d6c4}
+.desk-row{display:flex;gap:8px;flex-wrap:wrap}
+.desk-row input[type=email]{flex:1 1 180px;min-width:0;font:inherit;font-size:16px;padding:12px;border:0;background:var(--sleeve);color:var(--bark)}
+.desk-row input[type=email]:focus{outline:2px solid var(--mustard);outline-offset:0}
+.desk-row .btn{border:0;min-height:48px;padding:10px 16px;flex:0 0 auto}
+.desk-msg{font-family:var(--mono);font-size:12px!important;color:var(--mustard)!important;min-height:0}
+.desk-msg:empty{display:none}
+.desk.done .desk-row{display:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 /* vinyl offer over the cover */
 .cover .seal{position:absolute;top:12px;right:12px;width:76px;height:76px;border-radius:50%;background:var(--mustard);color:var(--bark);display:grid;place-content:center;text-align:center;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;line-height:1.2;transform:rotate(12deg);box-shadow:0 4px 12px rgba(0,0,0,.3);border:2px dashed var(--bark)}
 .cover .seal b{display:block;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:0;line-height:1}
@@ -301,6 +319,7 @@ const CONFIG = {
   },
   members:["Nick Sanders","Will Hubert"],
   video:{ id:"UiPY5gbM2io", title:"LULLABY" },
+  mailchimp:{ action:"https://instabio.us13.list-manage.com/subscribe/post?u=1c1a738981b4c84a400cab547&id=b63c1f66f3&f_id=0087c0e1f0", honeypot:"b_1c1a738981b4c84a400cab547_b63c1f66f3" },
   vinyl:{ url:"https://oyerecs.com/product/preorder-elektric-animals-bb-motel-transparent-blue-vinyl/", label:"Transparent Blue Vinyl", copies:250, price:"$25" },
   /* Pick a room: [title, length, spotify track id, apple music link, story (optional)] */
   rooms:[
@@ -399,6 +418,20 @@ const MON = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","
 const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const R = CONFIG.release;
 
+function signup(id, big){
+  return `<form class="desk${big?" big":""}" id="${id}" action="${esc(CONFIG.mailchimp.action)}" method="post" target="_blank" novalidate>
+    <div class="desk-head"><span class="bell" aria-hidden="true">${svg("booking")}</span><div><div class="kicker">Front desk</div><b>Leave your name at the desk</b></div></div>
+    <p>Spring tour dates, new music and vinyl drops, straight to your inbox. You'll hear about shows before anyone else.</p>
+    <div class="desk-row">
+      <label class="sr" for="${id}-email">Email address</label>
+      <input id="${id}-email" type="email" name="EMAIL" autocomplete="email" inputmode="email" placeholder="you@email.com" required>
+      <div aria-hidden="true" style="position:absolute;left:-5000px"><input type="text" name="${esc(CONFIG.mailchimp.honeypot)}" tabindex="-1" value=""></div>
+      <button type="submit" class="btn">Check me in</button>
+    </div>
+    <p class="desk-msg" role="status" aria-live="polite"></p>
+  </form>`;
+}
+
 function nextShowNote(){
   const s = CONFIG.shows.find(x => x.state!=="sold");
   if(!s) return "Recording all winter · back on the road in spring";
@@ -434,6 +467,7 @@ const PANES = [
       </div>
       <a class="mv-link" href="https://www.youtube.com/watch?v=${CONFIG.video.id}" ${ext}>Watch on YouTube ↗</a>
     </div>
+    ${signup("deskHome")}
     <div class="links">
       ${row({name:"Listen everywhere", note:"Spotify, Apple Music, YouTube", icon:"wave", url:"#listen", primary:true, go:1})}
       ${row({name:"Upcoming shows", note: nextShowNote(), icon:"shows", url:"#shows", go:2})}
@@ -470,12 +504,12 @@ const PANES = [
       <div class="h-top">Please</div><div class="h-big">Do Not<br>Disturb</div><div class="h-sub">Recording in progress</div>
     </div>
     <p class="notice">No shows on the books right now. We're holed up all winter writing and recording new songs, and we'll check back out onto the road in spring.</p>
+    ${signup("deskShows", true)}
     <ol class="log">
       <li><span class="when">Now – Winter</span><span class="what"><b>In the studio</b>Recording new material</span></li>
       <li><span class="when">Spring</span><span class="what"><b>Back on the road</b>Tour dates announced here first</span></li>
     </ol>
     <div class="links">
-      ${row({name:"Get the spring dates", note:"Follow on Spotify for tour alerts", icon:"wave", url:CONFIG.listen[0].url, primary:true})}
       ${row({name:"Book us for spring", note:"Email the band", icon:"booking", url:"#booking", go:5})}
     </div>`},
   { id:"merch", label:"Merch", html: () => `
@@ -566,6 +600,28 @@ if(start>0) requestAnimationFrame(()=>{ go(start,true); sync(); });
   f.allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
   box.replaceChildren(f);
 })();
+
+/* Front desk signup → Mailchimp (inline via JSONP, falls back to a normal submit) */
+document.querySelectorAll("form.desk").forEach(form=>{
+  form.addEventListener("submit", e=>{
+    e.preventDefault();
+    const input=form.querySelector("input[type=email]"), msg=form.querySelector(".desk-msg"), btn=form.querySelector("button");
+    const email=input.value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ msg.textContent="That email looks incomplete. Check it and try again."; input.focus(); return; }
+    btn.disabled=true; msg.textContent="Checking you in…";
+    const cb="mc"+Date.now(); let done=false;
+    const fallback=()=>{ if(done) return; done=true; btn.disabled=false; msg.textContent="Finishing sign-up in a new tab…"; HTMLFormElement.prototype.submit.call(form); };
+    window[cb]=r=>{ done=true; delete window[cb]; btn.disabled=false;
+      const t=String(r&&r.msg||"").replace(/<[^>]+>/g,"");
+      if(r&&r.result==="success"){ form.classList.add("done"); msg.textContent="You're checked in. Watch your inbox to confirm."; }
+      else if(/already subscribed/i.test(t)){ form.classList.add("done"); msg.textContent="You're already on the list. See you in spring."; }
+      else { msg.textContent=t.replace(/^\d+\s*-\s*/,"")||"Something went wrong. Please try again."; }
+    };
+    const url=CONFIG.mailchimp.action.replace("/post?","/post-json?")+"&EMAIL="+encodeURIComponent(email)+"&"+CONFIG.mailchimp.honeypot+"=&c="+cb;
+    const sc=document.createElement("script"); sc.src=url; sc.onerror=fallback; document.body.appendChild(sc);
+    setTimeout(fallback, 8000);
+  });
+});
 
 /* Pick a room */
 (function(){
