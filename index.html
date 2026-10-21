@@ -200,15 +200,14 @@ h2 em{font-style:normal;color:var(--rust)}
 .shelf-h::after{content:"";flex:1;height:1px;background:var(--line);order:1}
 .shelf-h .count{order:2;font-family:var(--mono);font-size:11px;color:var(--muted)}
 .tags{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px}
-.tag{position:relative;display:flex;flex-direction:column;gap:6px;min-height:118px;background:var(--paper);border:1px solid var(--line);
-  padding:26px 12px 12px;border-radius:4px 4px 4px 4px;clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%,0 14px);transition:transform .12s, background .2s}
-.tag::before{content:"";position:absolute;top:9px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:var(--sleeve);box-shadow:inset 0 0 0 1.5px var(--line)}
+.tag{display:flex;flex-direction:column;gap:8px;background:var(--paper);border:1px solid var(--line);padding:8px 8px 12px;transition:transform .12s, border-color .2s;min-width:0}
 .tag:active{transform:scale(.97)}
-.tag:hover{background:var(--sleeve)}
-.tag .pr{font-family:var(--mono);font-size:13px;color:var(--rust);font-variant-numeric:tabular-nums}
-.tag b{flex:1;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:14px;line-height:1.15;color:var(--bark)}
-.tag .v{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.tags .tag:last-child:nth-child(odd){grid-column:1 / -1;min-height:0}
+.tag:hover{border-color:var(--rust)}
+.tag .ph{position:relative;display:block;aspect-ratio:1;max-width:100%;background:var(--sleeve) url("art/crest.jpg") center/38% no-repeat;overflow:hidden}
+.tag .ph img{display:block;width:100%;height:100%;object-fit:cover;background:#fff}
+.tag .ph.noimg img{display:none}
+.tag .pr{position:absolute;left:6px;top:6px;font-family:var(--mono);font-size:12px;background:var(--rust);color:var(--mustard);padding:3px 7px;font-variant-numeric:tabular-nums}
+.tag b{font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:13px;line-height:1.15;color:var(--bark);padding:0 2px}
 
 /* guestbook */
 .register{background:var(--paper);border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:10px;
@@ -290,26 +289,26 @@ const CONFIG = {
   merchStore: "https://ea-merch-shop.printify.me/",
   merch: [
     ["Tees", [
-      ["Garment-Dyed Band Tee","$34.99","https://ea-merch-shop.printify.me/product/33338081"],
-      ["Teddy Bear Tee","$30","https://ea-merch-shop.printify.me/product/24866850"],
-      ["Teddy Bear Ringer Tee","$35","https://ea-merch-shop.printify.me/product/24866784"],
-      ["Not The Devil's Music Tee","$30","https://ea-merch-shop.printify.me/product/23758175"],
-      ["Neon Medusa Tee","$30","https://ea-merch-shop.printify.me/product/23759929"],
-      ["Barry Tee — Black","$30","https://ea-merch-shop.printify.me/product/23760887"],
-      ["Barry Tee — White","$30","https://ea-merch-shop.printify.me/product/23760838"]
+      ["Garment-Dyed Band Tee","$34.99","https://ea-merch-shop.printify.me/product/33338081","https://images-api.printify.com/mockup/69c86da5853caaab0b08a1eb/79048/98445/garment-dyed-band-tee.jpg?camera_label=front&s=400"],
+      ["Teddy Bear Tee","$30","https://ea-merch-shop.printify.me/product/24866850","https://images-api.printify.com/mockup/6917c55520bd8d710c02e214/38191/97992/teddy-bear-tee.jpg?camera_label=front&s=400"],
+      ["Teddy Bear Ringer Tee","$35","https://ea-merch-shop.printify.me/product/24866784","https://images-api.printify.com/mockup/6917c45b04a9bcc67e055e74/102310/101491/teddy-bear-ringer-tee.jpg?camera_label=front&s=400"],
+      ["Not The Devil's Music Tee","$30","https://ea-merch-shop.printify.me/product/23758175","https://images-api.printify.com/mockup/68e29d0c0b50e61d8e00b676/63303/97992/not-the-devils-music-tee.jpg?camera_label=front&s=400"],
+      ["Neon Medusa Tee","$30","https://ea-merch-shop.printify.me/product/23759929","https://images-api.printify.com/mockup/68e2b05c97253bd7200df34d/38192/97992/neon-medusa-tee.jpg?camera_label=front&s=400"],
+      ["Barry Tee — Black","$30","https://ea-merch-shop.printify.me/product/23760887","https://images-api.printify.com/mockup/68e2b75b5c8e09e0f20dfc02/38192/97992/barry-tee-black.jpg?camera_label=front&s=400"],
+      ["Barry Tee — White","$30","https://ea-merch-shop.printify.me/product/23760838","https://images-api.printify.com/mockup/68e2b6a8a99c166707108230/38191/97992/barry-tee-white.jpg?camera_label=front&s=400"]
     ]],
     ["Crewnecks", [
-      ["Red Dragon Crewneck — Not The Devil's Music","$45","https://ea-merch-shop.printify.me/product/24848071"],
-      ["Retro Cartoon Crewneck","$45","https://ea-merch-shop.printify.me/product/24848014"],
-      ["Cartoon Band Crewneck","$45","https://ea-merch-shop.printify.me/product/24847995"]
+      ["Red Dragon Crewneck — Not The Devil's Music","$45","https://ea-merch-shop.printify.me/product/24848071","https://images-api.printify.com/mockup/6916cac30237d491a606d310/25456/98502/red-dragon-crewneck-not-the-devils-music.jpg?camera_label=front&s=400"],
+      ["Retro Cartoon Crewneck","$45","https://ea-merch-shop.printify.me/product/24848014","https://images-api.printify.com/mockup/6916c9f730df88736d0604a8/25458/98502/retro-cartoon-crewneck.jpg?camera_label=front&s=400"],
+      ["Cartoon Band Crewneck","$45","https://ea-merch-shop.printify.me/product/24847995","https://images-api.printify.com/mockup/6916c964f4df3eba3e02e86e/25459/98502/cartoon-band-crewneck.jpg?camera_label=front&s=400"]
     ]],
     ["Long sleeves", [
-      ["Cartoon Heart Long Sleeve","$40","https://ea-merch-shop.printify.me/product/24848198"],
-      ["Vintage Cartoon Long Sleeve","$40","https://ea-merch-shop.printify.me/product/24848173"]
+      ["Cartoon Heart Long Sleeve","$40","https://ea-merch-shop.printify.me/product/24848198","https://images-api.printify.com/mockup/6916cdc56575d7559e05f933/25076/103304/cartoon-heart-long-sleeve.jpg?camera_label=front&s=400"],
+      ["Vintage Cartoon Long Sleeve","$40","https://ea-merch-shop.printify.me/product/24848173","https://images-api.printify.com/mockup/6916cd313dcaa8af180629f9/24996/103304/vintage-cartoon-long-sleeve.jpg?camera_label=front&s=400"]
     ]],
     ["Hats", [
-      ["Yellow Logo Trucker Hat","$30","https://ea-merch-shop.printify.me/product/24848309"],
-      ["Script Logo Trucker Hat","$30","https://ea-merch-shop.printify.me/product/23761097"]
+      ["Yellow Logo Trucker Hat","$30","https://ea-merch-shop.printify.me/product/24848309","https://images-api.printify.com/mockup/6916d04f3dcaa8af18062ab6/148316/110578/yellow-logo-trucker-hat.jpg?camera_label=front&s=400"],
+      ["Script Logo Trucker Hat","$30","https://ea-merch-shop.printify.me/product/23761097","https://images-api.printify.com/mockup/68e2b92167b8a2f85c063ebf/84650/110578/script-logo-trucker-hat.jpg?camera_label=front&s=400"]
     ]]
   ],
   follow: [
@@ -417,7 +416,7 @@ const PANES = [
       <span class="go">Shop ↗</span>
     </a>
     ${CONFIG.merch.map(([cat,items])=>`<div class="shelf"><div class="shelf-h"><span class="kicker">${esc(cat)}</span><span class="count">${items.length}</span></div>
-      <div class="tags">${items.map(([n,pr,u])=>`<a class="tag" href="${esc(u)}" ${ext}><span class="pr">${esc(pr)}</span><b>${esc(n)}</b><span class="v">View ↗</span></a>`).join("")}</div></div>`).join("")}
+      <div class="tags">${items.map(([n,pr,u,im])=>`<a class="tag" href="${esc(u)}" ${ext}><span class="ph"><img src="${esc(im)}" alt="${esc(n)}" loading="lazy" width="400" height="400" onerror="this.parentNode.classList.add('noimg')"><span class="pr">${esc(pr)}</span></span><b>${esc(n)}</b></a>`).join("")}</div></div>`).join("")}
     <div class="label">Every piece is printed when you order it. Ships from Printify.</div>`},
   { id:"follow", label:"Socials", html: () => `
     <div><div class="kicker">Socials</div><h2>Follow <em>along.</em></h2></div>
