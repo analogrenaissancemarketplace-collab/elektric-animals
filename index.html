@@ -471,9 +471,9 @@ function sync(){
   const w = pager.clientWidth || 1, x = pager.scrollLeft;
   ind.style.transform = `translateX(${(x/w)*100}%)`;
   const i = Math.round(x/w);
+  [...tabs.querySelectorAll("button")].forEach((b,k)=>b.setAttribute("aria-selected", k===i));
   if(i!==current){
     current=i;
-    [...tabs.querySelectorAll("button")].forEach((b,k)=>b.setAttribute("aria-selected", k===i));
     try{ history.replaceState(null,"","#"+PANES[i].id); }catch(e){}
   }
 }
