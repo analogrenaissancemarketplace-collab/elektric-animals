@@ -236,6 +236,9 @@ h2 em{font-style:normal;color:var(--rust)}
 .sent .actions,.mail .actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .register.mail{background-image:none;gap:14px}
 .mail .addr{font-size:18px}
+.mail .actions{display:grid!important;grid-template-columns:1fr 1fr}
+.mail .actions .btn,.mail .actions .ghost{width:100%}
+.mail .msub{font-size:13px;color:var(--muted);margin-top:2px}
 .mail .btn{min-height:46px;padding:10px 18px}
 .mail .ghost{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;letter-spacing:.04em;padding:10px 14px;background:transparent;color:var(--rust);border:2px solid var(--rust);min-height:46px}
 .sent .ghost{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:13px;letter-spacing:.04em;padding:8px 14px;background:transparent;color:var(--rust);border:2px solid var(--rust)}
@@ -385,6 +388,10 @@ const CONFIG = {
     { name:"Facebook",  note:"News and announcements",    url:"https://www.facebook.com/Elektricanimals/", icon:"people" }
   ],
   booking: "elektricanimals@gmail.com",
+  contacts: [
+    { label:"Email the band", sub:"Shows, events, press", email:"elektricanimals@gmail.com", subject:"Booking inquiry", cta:"Email us" },
+    { label:"Management", sub:"Business, partnerships, label and industry", email:"willobee@808am.net", subject:"Elektric Animals inquiry", cta:"Email us" }
+  ],
   photos: [
     ["band-bw","Nick & Will"],["band-motel","Check-in"],["typewriter","Room 4"],["phone","Front desk"],
     ["suitcase","Packed"],["dial","Call ahead"],["doors","Office"],["teddy","Left behind"],["carnations","Turndown"]
@@ -528,15 +535,15 @@ const PANES = [
     <div class="label"><b>OYE</b>Open Your Ears Records<br>© ${new Date().getFullYear()} Elektric Animals</div>`},
   { id:"booking", label:"Booking", html: () => `
     <div><div class="kicker">Front desk · Booking &amp; press</div><h2>Drop us <em>a line.</em></h2></div>
-    <p class="notice">Shows, festivals, private events, press and interviews. Email the band directly and we'll get back to you.</p>
-    <div class="register mail">
-      <div class="kicker">Email the band</div>
-      <div class="addr" id="addr">${esc(CONFIG.booking)}</div>
+    <p class="notice">Shows, festivals, private events, press and interviews go to the band. Business and industry inquiries go to our management.</p>
+    ${CONFIG.contacts.map((c,i)=>`<div class="register mail">
+      <div><div class="kicker">${esc(c.label)}</div><div class="msub">${esc(c.sub)}</div></div>
+      <div class="addr" id="addr${i}">${esc(c.email)}</div>
       <div class="actions">
-        <a class="btn" href="mailto:${esc(CONFIG.booking)}?subject=${encodeURIComponent("Booking inquiry")}">Email us</a>
-        <button type="button" id="copy" class="ghost">Copy email</button>
+        <a class="btn" href="mailto:${esc(c.email)}?subject=${encodeURIComponent(c.subject)}">${esc(c.cta)}</a>
+        <button type="button" class="ghost copy" data-i="${i}">Copy email</button>
       </div>
-    </div>`}
+    </div>`).join("")}`}
 ];
 
 /* build */
@@ -646,12 +653,12 @@ document.getElementById("mvPlay").addEventListener("click", ()=>{
 });
 
 /* copy email */
-document.getElementById("copy").addEventListener("click", e=>{
-  const btn = e.currentTarget;
+document.querySelectorAll("button.copy").forEach(btn=>btn.addEventListener("click", ()=>{
+  const i=btn.dataset.i, email=CONFIG.contacts[i].email;
   const done = t => { btn.textContent=t; setTimeout(()=>btn.textContent="Copy email",1600); };
-  const sel = ()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("addr")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); done("Selected, copy it"); };
-  try{ navigator.clipboard.writeText(CONFIG.booking).then(()=>done("Copied"), sel); }catch(err){ sel(); }
-});
+  const sel = ()=>{ const r=document.createRange(); r.selectNodeContents(document.getElementById("addr"+i)); const s=getSelection(); s.removeAllRanges(); s.addRange(r); done("Selected, copy it"); };
+  try{ navigator.clipboard.writeText(email).then(()=>done("Copied"), sel); }catch(err){ sel(); }
+}));
 </script>
 </body>
 </html>
