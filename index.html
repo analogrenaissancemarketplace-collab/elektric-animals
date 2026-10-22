@@ -151,6 +151,14 @@ h2 em{font-style:normal;color:var(--rust)}
 .rc-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .rc-acts .btn{min-height:44px;font-size:12px}
 .sp iframe{display:block;width:100%;height:352px;border:0;border-radius:12px}
+/* "your hosts" framed photo */
+.hosts{margin:6px 0 0;display:flex;flex-direction:column;align-items:center}
+.hosts-frame{width:84%;max-width:380px;padding:12px;background:linear-gradient(135deg,#7a4524,#4a250f 55%,#6b3517);box-shadow:0 18px 30px -16px rgba(43,21,10,.7),inset 0 0 0 2px rgba(255,255,255,.08);transform:rotate(-1.2deg)}
+.hosts-frame img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;box-shadow:inset 0 0 0 1px rgba(0,0,0,.4);border:6px solid var(--sleeve)}
+.plate{margin-top:-14px;position:relative;z-index:1;padding:8px 18px 9px;text-align:center;background:linear-gradient(180deg,#f1c56e,#c9913a 60%,#e4b45a);color:#3a1f0b;border-radius:3px;box-shadow:0 4px 10px rgba(43,21,10,.35),inset 0 1px 0 rgba(255,255,255,.5);display:flex;flex-direction:column;gap:1px}
+.plate small{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.plate b{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:14px;letter-spacing:.03em}
+
 /* front desk signup */
 .desk{position:relative;background:var(--bark);color:var(--sleeve);padding:16px;display:flex;flex-direction:column;gap:10px}
 .desk.big{border:2px solid var(--mustard)}
@@ -482,6 +490,10 @@ const PANES = [
       ${row({name:"Follow the band", note:"Instagram, TikTok, YouTube, Facebook", icon:"follow", url:"#follow", go:4})}
       ${row({name:"Book Elektric Animals", note:"Shows, events, press", icon:"booking", url:"#booking", go:5})}
     </div>
+    <figure class="hosts">
+      <div class="hosts-frame"><img src="art/hosts.jpg" alt="Nick Sanders and Will Hubert of Elektric Animals" loading="lazy" width="900" height="900"></div>
+      <figcaption class="plate"><small>Your hosts</small><b>${esc(CONFIG.members[0])} &amp; ${esc(CONFIG.members[1])}</b><small>Proprietors · B &amp; B Motel</small></figcaption>
+    </figure>
     <div class="label">Play at 33 RPM and keep out of direct sunlight</div>`},
   { id:"listen", label:"Listen", html: () => `
     <div><div class="kicker">The jukebox</div><h2>Put a record <em>on.</em></h2></div>
